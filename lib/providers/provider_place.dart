@@ -45,7 +45,9 @@ class AllPlaces with ChangeNotifier {
 
   Future<void> fecthPlaces() async {
     final dataList = await db.getData('user_places');
-
+    if (dataList.isEmpty) {
+      return;
+    }
     setItems = fromJsontoPlace(dataList);
     debugPrint(items[0].title);
     debugPrint(items.length.toString());

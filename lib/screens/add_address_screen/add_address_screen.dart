@@ -75,16 +75,26 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 final result = await showModalBottomSheet<bool>(
                     isDismissible: false,
                     context: context,
-                    builder: (context) => BottomSheetVerification(
-                          title: viewModel.getTitle!,
-                          image: viewModel.getImage!,
-                          location: viewModel.getLocation!,
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(15))),
+                    builder: (context) => Scaffold(
+                          backgroundColor: Colors.transparent,
+                          body: BottomSheetVerification(
+                            title: viewModel.getTitle!,
+                            image: viewModel.getImage!,
+                            location: viewModel.getLocation!,
+                          ),
                         ));
 
                 if (result == false) {
                   debugPrint("return botomsheet false..");
                   return;
                 }
+                if (result == null) {
+                  return;
+                }
+
                 Provider.of<AllPlaces>(context, listen: false).addPlace(
                     viewModel.titleTextControll.text, viewModel.getImage!);
                 Navigator.of(context).pop();

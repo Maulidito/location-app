@@ -41,22 +41,123 @@ class BottomSheetVerification extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => Future<bool>(() => _checkOnWillPop(context)),
-      child: Container(
-        width: double.infinity,
-        height: double.infinity / 2,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-        child: Column(
-          children: [
-            Container(),
-            Row(children: [
-              FrameImage(child: Image.file(image,fit: BoxFit.cover,), )
-            ]),
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: Text("pop"),
+      child: Column(
+        children: [
+          Expanded(
+              child: Container(
+            alignment: AlignmentDirectional.center,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+                color: Theme.of(context).colorScheme.primary),
+            width: double.infinity,
+            child: const Text(
+              "Verification",
+              style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500),
             ),
-          ],
-        ),
+          )),
+          Expanded(
+            flex: 8,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity / 2,
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 100,
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                              flex: 1, child: Center(child: Text("Title"))),
+                          VerticalDivider(
+                            indent: 1,
+                            endIndent: 5,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: Text(
+                                title,
+                                maxLines: 2,
+                                textScaleFactor: 0.9,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                ),
+                              ))
+                        ],
+                      ),
+                    ),
+                    Divider(
+                      indent: 50,
+                      endIndent: 50,
+                    ),
+                    SizedBox(
+                      height: 300,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(child: Center(child: Text("Image"))),
+                            VerticalDivider(
+                              indent: 1,
+                              endIndent: 5,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: FrameImage(
+                                child: Image.file(
+                                  image,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          ]),
+                    ),
+                    Divider(
+                      indent: 50,
+                      endIndent: 50,
+                    ),
+                    SizedBox(
+                      height: 300,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(child: Center(child: Text("Image"))),
+                            VerticalDivider(
+                              indent: 1,
+                              endIndent: 5,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: FrameImage(
+                                child: Image.file(
+                                  image,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          ]),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0, fixedSize: Size(250, 50)),
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: Text("Confirm"),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

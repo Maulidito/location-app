@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: FutureBuilder(
           future: provider.fecthPlaces(),
-          builder: (cstx, snapShot) {
+          builder: (ctx, snapShot) {
             if (snapShot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator.adaptive(
@@ -35,15 +35,14 @@ class HomeScreen extends StatelessWidget {
               );
             }
             if (snapShot.hasError) {
-              return Center(
+              return const Center(
                 child: Text("Something Went Wrong"),
               );
             }
 
             return Consumer<AllPlaces>(
-              
-              builder: (ctx, dataPlace, widget) => dataPlace.items.length == 0
-                  ? Center(
+              builder: (ctx, dataPlace, widget) => dataPlace.items.isEmpty
+                  ? const Center(
                       child: Text("You dont have any places, add one"),
                     )
                   : ListView.builder(
