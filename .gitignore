@@ -9,10 +9,7 @@
 .history
 .svn/
 
-#unnecesesery
-android/
-ios/
-test
+
 
 
 # IntelliJ related
