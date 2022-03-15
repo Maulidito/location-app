@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location_app/data/location_helpers.dart';
 import 'package:location_app/widgets/frame_image.dart';
 
 class BottomSheetVerification extends StatelessWidget {
@@ -68,88 +69,25 @@ class BottomSheetVerification extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 100,
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                              flex: 1, child: Center(child: Text("Title"))),
-                          VerticalDivider(
-                            indent: 1,
-                            endIndent: 5,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                          Expanded(
-                              flex: 2,
-                              child: Text(
-                                title,
-                                maxLines: 2,
-                                textScaleFactor: 0.9,
-                                style: TextStyle(
-                                  fontSize: 24,
-                                ),
-                              ))
-                        ],
-                      ),
+                    VerificationItem(
+                        title: "Title",
+                        dataItem: title,
+                        isTextType: true,
+                        height: 100),
+                    VerificationItem(
+                      title: "Image",
+                      dataItem: image.path.toString(),
+                      isTextType: false,
                     ),
-                    Divider(
-                      indent: 50,
-                      endIndent: 50,
-                    ),
-                    SizedBox(
-                      height: 300,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(child: Center(child: Text("Image"))),
-                            VerticalDivider(
-                              indent: 1,
-                              endIndent: 5,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: FrameImage(
-                                child: Image.file(
-                                  image,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            )
-                          ]),
-                    ),
-                    Divider(
-                      indent: 50,
-                      endIndent: 50,
-                    ),
-                    SizedBox(
-                      height: 300,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(child: Center(child: Text("Image"))),
-                            VerticalDivider(
-                              indent: 1,
-                              endIndent: 5,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: FrameImage(
-                                child: Image.file(
-                                  image,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            )
-                          ]),
+                    VerificationItem(
+                      title: "Location",
+                      isTextType: false,
+                      Location: location,
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           elevation: 0, fixedSize: Size(250, 50)),
-                      onPressed: () => Navigator.of(context).pop(false),
+                      onPressed: () => Navigator.of(context).pop(true),
                       child: Text("Confirm"),
                     ),
                   ],
@@ -159,6 +97,85 @@ class BottomSheetVerification extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class VerificationItem extends StatelessWidget {
+  const VerificationItem(
+      {Key? key,
+      required this.title,
+      this.dataItem,
+      required this.isTextType,
+      this.height,
+      this.Location})
+      : super(key: key);
+  final String title;
+  final String? dataItem;
+  final bool isTextType;
+  final LatLng? Location;
+  final double? height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          height: height != null ? height : 300,
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(flex: 1, child: Center(child: Text(title))),
+              VerticalDivider(
+                indent: 1,
+                endIndent: 5,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              Expanded(
+                  flex: 2,
+                  child: isTextType
+                      ? Text(
+                          dataItem ?? "Not Found",
+                          maxLines: 2,
+                          textScaleFactor: 0.9,
+                          style: TextStyle(
+                            fontSize: 24,
+                          ),
+                        )
+                      : FrameImage(
+                          child: Location != null
+                              ? GoogleMap(
+                                  scrollGesturesEnabled: false,
+                                  compassEnabled: false,
+                                  zoomGesturesEnabled: false,
+                                  zoomControlsEnabled: false,
+                                  rotateGesturesEnabled: false,
+                                  myLocationButtonEnabled: false,
+                                  tiltGesturesEnabled: false,
+                                  myLocationEnabled: false,
+                                  markers: [
+                                    Marker(
+                                        markerId: MarkerId("locationChoosen"),
+                                        position: Location!)
+                                  ].toSet(),
+                                  initialCameraPosition: CameraPosition(
+                                      target: Location!, zoom: 10))
+                              : dataItem != null
+                                  ? Image.file(
+                                      File(dataItem!),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Text("Error"),
+                        ))
+            ],
+          ),
+        ),
+        Divider(
+          indent: 50,
+          endIndent: 50,
+        ),
+      ],
     );
   }
 }
