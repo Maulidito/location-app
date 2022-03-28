@@ -35,6 +35,7 @@ class HomeScreen extends StatelessWidget {
               );
             }
             if (snapShot.hasError) {
+              debugPrint(snapShot.error.toString());
               return const Center(
                 child: Text("Something Went Wrong"),
               );

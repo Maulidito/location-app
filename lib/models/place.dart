@@ -1,11 +1,12 @@
 import 'dart:io';
 
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 class Place {
   final String id;
   final String title;
-  final LocationData? location;
+  final LatLng? location;
   final File image;
 
   Place(
@@ -18,7 +19,8 @@ class Place {
     return Place(
         id: data['id'].toString(),
         title: data['title'].toString(),
-        location: null,
+        location: LatLng(double.parse(data["lat"] as String),
+            double.parse(data["long"] as String)),
         image: File(data["image"].toString()));
   }
 }

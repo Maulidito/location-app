@@ -5,21 +5,32 @@ import 'package:path/path.dart' as path;
 import 'package:sqflite/sqlite_api.dart';
 
 class DBPlace extends DbSqlite {
+  final String _tableName = "user_places";
   final String _columnId = "id";
   final String _columnTitle = "title";
   final String _columnImage = "image";
+  final String _columnlat = "lat";
+  final String _columnlong = "long";
 
   @override
   Future<Database> database() async {
     final databasesPath = await sql.getDatabasesPath();
-    final sqlDb = await sql.openDatabase(
-      path.join(databasesPath, "places.db"),
-      onCreate: (db, version) {
-        db.execute(
-            "CREATE TABLE user_places ($_columnId TEXT PRIMARY KEY, $_columnTitle TEXT, $_columnImage TEXT)");
-      },
-      version: 1,
-    );
+    final sqlDb = await sql.openDatabase(path.join(databasesPath, "places.db"),
+        onCreate: (db, version) {
+          db.execute(
+              "CREATE TABLE $_tableName ($_columnId TEXT PRIMARY KEY, $_columnTitle TEXT, $_columnImage TEXT, $_columnlat TEXT, $_columnlong TEXT)");
+        },
+        version: 2,
+        onUpgrade: (Database db, int oldVersion, int newVersion) {
+          switch (oldVersion) {
+            case 1: //version 2
+              db.execute("DROP TABLE IF EXISTS $_tableName");
+              db.execute(
+                  "CREATE TABLE $_tableName ($_columnId TEXT PRIMARY KEY, $_columnTitle TEXT, $_columnImage TEXT, $_columnlat TEXT, $_columnlong TEXT)");
+              break;
+            default:
+          }
+        });
     return sqlDb;
   }
 

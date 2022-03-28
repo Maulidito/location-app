@@ -96,7 +96,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 }
 
                 Provider.of<AllPlaces>(context, listen: false).addPlace(
-                    viewModel.titleTextControll.text, viewModel.getImage!);
+                    viewModel.titleTextControll.text,
+                    viewModel.getImage!,
+                    viewModel.getLocation!);
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.add),

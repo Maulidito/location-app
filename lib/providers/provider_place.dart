@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:location_app/data/db_place/db_place.dart';
 import 'package:location_app/models/place.dart';
@@ -17,21 +18,23 @@ class AllPlaces with ChangeNotifier {
     _dataPlace.insertAll(0, data);
   }
 
-  void addPlace(
-    String title,
-    File image,
-  ) {
+  void addPlace(String title, File image, LatLng location) {
     final newPlace = Place(
         id: DateTime.now().toString(),
         title: title,
-        location: null,
+        location: location,
         image: image);
     _dataPlace.add(newPlace);
+
     db.insert("user_places", {
       "id": newPlace.id,
       "title": newPlace.title,
-      "image": newPlace.image.path
+      "image": newPlace.image.path,
+      "lat": newPlace.location == null ? newPlace.location!.latitude : "0.000",
+      "long":
+          newPlace.location == null ? newPlace.location!.longitude : "0.000",
     });
+
     notifyListeners();
   }
 
