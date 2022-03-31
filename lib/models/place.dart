@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -16,6 +17,7 @@ class Place {
       required this.image});
 
   factory Place.fromJson(Map<String, Object?> data) {
+    debugPrint("$data");
     return Place(
         id: data['id'].toString(),
         title: data['title'].toString(),

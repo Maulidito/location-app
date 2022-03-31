@@ -30,9 +30,12 @@ class AllPlaces with ChangeNotifier {
       "id": newPlace.id,
       "title": newPlace.title,
       "image": newPlace.image.path,
-      "lat": newPlace.location == null ? newPlace.location!.latitude : "0.000",
-      "long":
-          newPlace.location == null ? newPlace.location!.longitude : "0.000",
+      "lat": newPlace.location != null
+          ? newPlace.location!.latitude.toString()
+          : "0.000",
+      "long": newPlace.location != null
+          ? newPlace.location!.longitude.toString()
+          : "0.000",
     });
 
     notifyListeners();
@@ -52,9 +55,6 @@ class AllPlaces with ChangeNotifier {
       return;
     }
     setItems = fromJsontoPlace(dataList);
-    debugPrint(items[0].title);
-    debugPrint(items.length.toString());
-
     notifyListeners();
   }
 }

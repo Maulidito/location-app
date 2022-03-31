@@ -37,6 +37,7 @@ class DBPlace extends DbSqlite {
   @override
   Future<void> insert(String table, Map<String, Object> data) async {
     final db = await database();
+    debugPrint("check data before insert to Db $data");
     await db.insert(table, data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
   }

@@ -5,7 +5,7 @@ import '../../screens/home_screen/home_screen.dart';
 import '../../screens/item_address_screen/item_address_screen.dart';
 
 class Routes {
-   static String get home => HomeScreen.routeName;
+  static String get home => HomeScreen.routeName;
 
   static Map<String, Widget Function(BuildContext)> get routes {
     return {
