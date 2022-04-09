@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../models/place.dart';
 
-class item_image_screen extends StatelessWidget {
-  const item_image_screen({
+class ItemImageScreen extends StatelessWidget {
+  const ItemImageScreen({
     Key? key,
     required this.data,
   }) : super(key: key);
@@ -16,6 +16,15 @@ class item_image_screen extends StatelessWidget {
     return Column(
       children: [
         data != null ? Image.file(data.image) : Text("Not Found"),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+          child: Text(data.title,
+              style: TextStyle(
+                  fontSize: 25,
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.w500)),
+          alignment: Alignment.centerLeft,
+        )
       ],
     );
   }

@@ -58,4 +58,10 @@ class DBPlace extends DbSqlite {
       whereArgs: [id],
     );
   }
+
+  @override
+  Future<void> delete(String table, String id) async {
+    final db = await database();
+    await db.delete(table, where: '$_columnId = ?', whereArgs: [id]);
+  }
 }

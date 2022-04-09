@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:location_app/screens/item_address_screen/widgets/tab_icon.dart';
 
-class Bottom_tabbar extends StatefulWidget {
+class BottomTabbar extends StatefulWidget {
   final TabController tabController;
-  const Bottom_tabbar({Key? key, required this.tabController})
-      : super(key: key);
+  const BottomTabbar({Key? key, required this.tabController}) : super(key: key);
 
   @override
-  State<Bottom_tabbar> createState() => _Bottom_tabbarState();
+  State<BottomTabbar> createState() => _BottomTabbarState();
 }
 
-class _Bottom_tabbarState extends State<Bottom_tabbar> {
+class _BottomTabbarState extends State<BottomTabbar> {
   @override
   Widget build(BuildContext context) {
     debugPrint("Bottom tabbar generating...");

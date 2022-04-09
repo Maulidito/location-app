@@ -5,4 +5,5 @@ abstract class DbSqlite {
   Future<void> insert(String table, Map<String, Object> data);
   Future<List<Map<String, Object?>>> getData(String table);
   Future<List<Map<String, Object?>>> getOneData(String table, String id);
+  Future<void> delete(String table, String id);
 }

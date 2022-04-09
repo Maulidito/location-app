@@ -52,8 +52,8 @@ class _ItemAddressScreenState extends State<ItemAddressScreen>
               controller: tabController,
               physics: NeverScrollableScrollPhysics(),
               children: [
-                item_image_screen(data: data),
-                item_location_screen(
+                ItemImageScreen(data: data),
+                ItemLocationScreen(
                   latLng: data.location ?? LatLng(5.000, 20.000),
                 )
               ]),
@@ -61,7 +61,7 @@ class _ItemAddressScreenState extends State<ItemAddressScreen>
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.all(15),
-              child: Bottom_tabbar(tabController: tabController),
+              child: BottomTabbar(tabController: tabController),
             ),
           ),
         ]));
