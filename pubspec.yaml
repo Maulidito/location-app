@@ -41,6 +41,7 @@ dependencies:
   sqflite: ^2.0.2
   google_maps_flutter: ^2.1.1
   shared_preferences: ^2.0.13
+  carousel_slider: ^4.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:location_app/providers/provider_list_style.dart';
 import 'package:location_app/screens/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -14,10 +15,12 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   void getUserPreference() async {
+    debugPrint("GET DATA USER PREFERENCE");
     await Provider.of<ProviderTheme>(context, listen: false)
-        .getThemeFromPreference()
-        .then((value) =>
-            Navigator.of(context).pushReplacementNamed(HomeScreen.routeName));
+        .getThemeFromPreference();
+    await Provider.of<ProviderListStyle>(context, listen: false)
+        .getListStylePreference();
+    Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
   }
 
   @override
@@ -30,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     debugPrint("CHECK FUTURE BUILDER IS DONE");
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: CircularProgressIndicator.adaptive(),
       ),

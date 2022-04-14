@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:location_app/config/routes/routes.dart';
 import 'package:location_app/config/theme/theme_light.dart';
+import 'package:location_app/providers/provider_list_style.dart';
 import 'package:location_app/providers/provider_place.dart';
 import 'package:location_app/providers/provider_theme.dart';
 
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AllPlaces()),
-        ChangeNotifierProvider(create: (context) => ProviderTheme())
+        ChangeNotifierProvider(create: (context) => ProviderTheme()),
+        ChangeNotifierProvider(create: (context) => ProviderListStyle())
       ],
       child: LoadApp(),
     );

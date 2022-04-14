@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:location_app/models/place.dart';
 import 'package:location_app/providers/provider_place.dart';
 import 'package:provider/provider.dart';
-
+import 'delete_system.dart';
 import '../../item_address_screen/item_address_screen.dart';
 
 class ListItem extends StatelessWidget {
@@ -15,53 +15,45 @@ class ListItem extends StatelessWidget {
 
   final Place dataPlace;
 
-  AlertDialog confirmDeleteDialog(AllPlaces provider, BuildContext context) {
-    return AlertDialog(
-        content: Text("Delete the ${dataPlace.title}"),
-        actions: [
-          TextButton(
-              onPressed: () async {
-                await provider.deletePlace(dataPlace.id);
-                return Navigator.of(context).pop(true);
-              },
-              child: Text("Yes")),
-          TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: Text("No"))
-        ]);
-  }
-
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AllPlaces>(context, listen: false);
-    return ListTile(
-      leading: CircleAvatar(backgroundImage: FileImage(dataPlace.image)),
-      title: Text(dataPlace.title),
-      subtitle: Text("Lorem Ipsum And index dont know ${dataPlace}"),
-      trailing: IconButton(
-        icon: Icon(Icons.delete),
-        onPressed: () async {
-          final result = await showDialog(
-              context: context,
-              builder: (context) => confirmDeleteDialog(provider, context));
-          if (result == false) {
-            return;
-          }
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Undo The Action"),
-            action: SnackBarAction(
-              label: "UNDO",
-              textColor: Colors.white,
-              onPressed: () async {
-                debugPrint("CHECK DATA ${dataPlace.id}");
-                await provider.restorePlace();
-              },
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      child: Material(
+        elevation: 10,
+        borderRadius: BorderRadius.circular(15),
+        color: Theme.of(context).colorScheme.primary,
+        child: InkWell(
+          splashColor: Colors.red,
+          onTap: () => Navigator.of(context)
+              .pushNamed(ItemAddressScreen.routeName, arguments: dataPlace.id),
+          child: ListTile(
+            contentPadding: EdgeInsets.all(10),
+            leading: CircleAvatar(backgroundImage: FileImage(dataPlace.image)),
+            title: Padding(
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
+              child: Text(
+                dataPlace.title,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20),
+              ),
             ),
-          ));
-        },
+            subtitle: Text("Lorem Ipsum And index dont know ${dataPlace}",
+                style: TextStyle(color: Colors.white)),
+            trailing: IconButton(
+                icon: Icon(Icons.delete,
+                    color: Theme.of(context).colorScheme.secondary),
+                onPressed: () => DeleteSystem()
+                    .showDeleteDialog(context, provider, dataPlace)),
+            onTap: () => Navigator.of(context).pushNamed(
+                ItemAddressScreen.routeName,
+                arguments: dataPlace.id),
+          ),
+        ),
       ),
-      onTap: () => Navigator.of(context)
-          .pushNamed(ItemAddressScreen.routeName, arguments: dataPlace.id),
     );
   }
 }
