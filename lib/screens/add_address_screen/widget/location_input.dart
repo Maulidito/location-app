@@ -7,9 +7,8 @@ import 'package:location/location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationInput extends StatefulWidget {
-  final Function saveLocation;
   const LocationInput({Key? key, required this.saveLocation}) : super(key: key);
-
+  final Function saveLocation;
   @override
   State<LocationInput> createState() => _LocationInputState();
 }
@@ -17,8 +16,9 @@ class LocationInput extends StatefulWidget {
 class _LocationInputState extends State<LocationInput> {
   LatLng? _currentLocation;
   bool _selectMapMode = false;
-  final Completer<GoogleMapController> _controllerGooggleMap = Completer();
+
   bool _refreshMap = false;
+  GoogleMapController? initController;
 
   void refresh() {
     setState(() {
@@ -54,18 +54,18 @@ class _LocationInputState extends State<LocationInput> {
       return;
     }
     try {
-      refresh();
       final getCurrentLocation = await Location().getLocation();
       setLocationMapMode(loc: getCurrentLocation, mapMode: false);
-      GoogleMapController controller = await _controllerGooggleMap.future;
-      controller.animateCamera(CameraUpdate.newCameraPosition(
-          CameraPosition(target: _currentLocation!, zoom: 15)));
+      if (initController != null && _currentLocation != null) {
+        await initController!.animateCamera(CameraUpdate.newCameraPosition(
+            CameraPosition(target: _currentLocation!, zoom: 15)));
+      }
       widget.saveLocation(_currentLocation);
       debugPrint(
           "${_currentLocation!.latitude} ${_currentLocation!.longitude}");
       return;
     } catch (e) {
-      debugPrint("error ${e.toString()}");
+      debugPrint("Get Current User Error ${e.toString()}");
     }
   }
 
@@ -84,9 +84,11 @@ class _LocationInputState extends State<LocationInput> {
       return;
     }
     setLocationMapMode(locLatLang: LatLng(0.0, 0.0), mapMode: true);
-    GoogleMapController controller = await _controllerGooggleMap.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: LatLng(0.0, 0.0))));
+
+    if (initController != null && _currentLocation != null) {
+      initController!.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(target: LatLng(0.0, 0.0), zoom: 1)));
+    }
 
     func.saveLocation(_currentLocation);
     debugPrint("Map Mode $_selectMapMode");
@@ -153,8 +155,9 @@ class _LocationInputState extends State<LocationInput> {
                                 compassEnabled: false,
                                 onLongPress: _getTapLocation,
                                 onMapCreated: (goggleMapController) {
-                                  _controllerGooggleMap
-                                      .complete(goggleMapController);
+                                  debugPrint("BUILDING MAP...");
+
+                                  initController = goggleMapController;
                                 },
                                 initialCameraPosition: CameraPosition(
                                     zoom: _selectMapMode ? 0 : 15,

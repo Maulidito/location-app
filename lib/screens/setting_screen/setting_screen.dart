@@ -5,6 +5,7 @@ import 'package:location_app/providers/provider_theme.dart';
 import 'package:location_app/screens/setting_screen/widgets/item_settings.dart';
 import 'package:location_app/screens/setting_screen/widgets/viewing_style_example.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -47,7 +48,33 @@ class SettingScreen extends StatelessWidget {
                 ListTile(
                   title: Text("Reset Data & Configuration"),
                   trailing: IconButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        final checkUserConfirmation = await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Text("Delete all Saved Setting?"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(true),
+                                      child: Text("Yes")),
+                                  TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(false),
+                                      child: Text("No"))
+                                ],
+                              );
+                            });
+                        if (checkUserConfirmation == false) return;
+                        final ref = await SharedPreferences.getInstance();
+                        await ref.clear();
+                        await Provider.of<ProviderTheme>(context, listen: false)
+                            .getThemeFromPreference();
+                        await Provider.of<ProviderListStyle>(context,
+                                listen: false)
+                            .getListStylePreference();
+                      },
                       icon: Icon(Icons.replay_circle_filled_outlined)),
                 ),
                 Divider(),

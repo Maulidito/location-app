@@ -14,6 +14,7 @@ class AddAddressViewModel {
   }
 
   set setLocation(LatLng loc) {
+    debugPrint("SET THE LOCATION IN VIEW MODEL : ${loc.toString()}");
     _location = loc;
   }
 
@@ -34,6 +35,9 @@ class AddAddressViewModel {
   }
 
   bool checkNull() {
+    debugPrint("text ${_textControll.text}");
+    debugPrint("pickedImage ${_pickedImage.toString()}");
+    debugPrint("_location ${_location.toString()}");
     if (_textControll.text.isEmpty ||
         _pickedImage == null ||
         _location == null) {
