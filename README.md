@@ -1,16 +1,35 @@
-# location_app
+# location app
 
-A new Flutter project.
+A Flutter project from Udemy but with more feature.
 
-## Getting Started
+## What is Location App ?
 
-This project is a starting point for a Flutter application.
+an app that save an image by take a picture from camera or from gallery then save it with a location.
 
-A few resources to get you started if this is your first Flutter project:
+[link to udemy course](https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## What depedency or state management is used ?
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [Provider](https://pub.dev/packages/provider) ( State Management )
+- [google_maps_flutter](https://pub.dev/packages/google_maps_flutter) ( maps )
+- [location](https://pub.dev/packages/location) ( get current location user )
+- [sqflite](https://pub.dev/packages/sqflite) ( Local Database )
+- [shared_preferences](https://pub.dev/packages/shared_preferences) ( save configuration user )
+- [image_picker](https://pub.dev/packages/image_picker) ( take an image or picture )
+- [carousel_slider](https://pub.dev/packages/carousel_slider) ( list viewing style )
+
+## Functional Requirement
+
+- User can input Title, Take a picture from gallery or camera, and pick location
+
+- User can create and delete the Data
+
+- User can view the Data
+
+## Non Functional Requirement
+
+- User can change to Dark Mode
+
+- User can change List to Carousel style
+
+- User Verification for adding a Data
