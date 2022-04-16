@@ -39,16 +39,21 @@ an app that save an image by take a picture from camera or from gallery then sav
 some of gif got cutted
 
 - Adding a Data
+
   ![Add Data](https://media3.giphy.com/media/ihMj0is8Ql5V3ALTEd/giphy.gif)
 
 - Verification Data
+
   ![Verification Data](https://media0.giphy.com/media/ve7Vy4M0rD7YWFNPmG/giphy.gif)
 
 - View Data
+
   ![view Data](https://media4.giphy.com/media/HQZ8Ga8ga4yVF9qk4H/giphy.gif)
 
 - Feature Non Functional
+
   ![non functional](https://media2.giphy.com/media/DqImgoPfZuicofHHXU/giphy.gif)
 
 - Delete Data & Undo System
+
   ![delete data](https://media1.giphy.com/media/uPHfPxKfMSB4fFi6S4/giphy.gif)
